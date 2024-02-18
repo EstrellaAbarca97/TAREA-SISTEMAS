@@ -1,0 +1,384 @@
+borrador infografias
+
+switching, routing, y wireless Essentials 
+conceptos de Switching, vlans y enrutamiento entre redes vlan 
+
+modulo 1 : configuración básica de dispositivos
+
+Título del módulo: Configuración básica de dispositivos
+Objetivos del módulo: Configuración de los dispositivos mediante los procedimientos recomendados de seguridad.
+
+1.1 Configuración de parámetros iniciales de un switch
+
+ 1.1.1 Secuencia de arranque de un switch
+Antes de poder configurar un switch, debe encenderlo y permitirle pasar por la secuencia de arranque de cinco pasos. 
+
+1.1.2 El comando boot system
+la variable de entorno BOOT se establece mediante el boot system comando del modo de configuración global.
+
+1.1.3 Indicadores LED del switch
+LED del sistema-Muestra si el sistema está recibiendo energía y funciona correctamente
+ (RPS)-Muestra el estado de RPS
+LED de estado del puerto-Indica que el modo de estado del puerto está seleccionado cuando el LED está verde.
+LED de modo dúplex del puerto-Indica que el modo dúplex del puerto está seleccionado cuando el LED está verde
+LED de velocidad del puerto-Indica que el modo de velocidad del puerto está seleccionado. 
+LED de modo de alimentación por Ethernet-Si se admite PoE, estará presente un LED de modo PoE
+
+1.1.3 Recuperarse de un bloqueo del sistema
+El cargador de arranque proporciona acceso al switch si no se puede usar el sistema operativo debido a la falta de archivos de sistema o al daño de estos.
+
+1.1.4 Acceso a administración de switches
+Para el acceso a la administración remota de un switch, este se debe configurar con una dirección IP y una máscara de subred.
+Tenga en cuenta que para administrar el switch desde una red remota, el switch debe configurarse con una puerta de enlace predeterminada. Este es un proceso muy similar a la configuración de la información de dirección IP en los dispositivos host
+
+
+1.2 Configuración de puertos de un switch
+
+1.2.1 Comunicación dúplex
+La comunicación en dúplex completo aumenta el ancho de banda eficaz al permitir que ambos extremos de una conexión transmitan y reciban datos simultáneamente.
+
+1.2.2Configuración de puertos de switch en la capa física
+Los puertos de switch se pueden configurar manualmente con parámetros específicos de dúplex y de velocidad.
+
+1.2.3Auto-MDIX (MDIX automático)
+la interfaz detecta automáticamente el tipo de conexión de cable requerido (directo o cruzado) y configura la conexión conforme a esa información.
+S1(config-if)# mdix auto
+
+1.2.4 Switch Verification Commands 
+show interfaces [interface-id] show startup-config show running-config show mac address-table
+
+1.2.5Verificar la configuración de puertos del switch.
+El comando show running-config se puede usar para verificar que el switch se haya configurado correctamente.
+
+1.2.6Problemas de la capa de acceso a la red
+El resultado del comando show interfaces es útil para detectar problemas comunes de medios.
+*Errores de entrada- Cantidad total de errores. Incluye runts, gigantes, sin buffer, CRC, , desbordamiento y recuentos ignorados.
+
+1.2.7
+Errores de entrada y salida de interfaz
+“Input errors” indica la suma de todos los errores en los datagramas que se recibieron en la interfaz que se analiza.
+
+1.2.8
+Resolución de problemas de la capa de acceso a la red
+Utilice el comando show interfaces para verificar el estado de la interfaz.
+
+1.3 Acceso remoto seguro
+
+1.3.1
+Operación Telnet
+Es posible que no siempre tenga acceso directo al switch cuando necesite configurarlo. Necesita poder acceder a él de forma remota y es imperativo que su acceso sea seguro.
+
+1.3.2
+Funcionamiento de SSH
+Secure Shell (SSH) es un protocolo seguro que utiliza el puerto TCP 22. Proporciona una conexión de administración segura (encriptada) a un dispositivo remoto. 
+ SSH proporciona seguridad para las conexiones remotas mediante el cifrado seguro cuando se autentica un dispositivo (nombre de usuario y contraseña) y también para los datos transmitidos entre los dispositivos que se comunican.
+
+1.3.3
+Verifique que el switch admita SSH
+Para habilitar SSH en un switch Catalyst 2960, el switch debe usar una versión del software IOS que incluya características y capacidades criptográficas (cifradas).
+
+1.3.4
+Configuración de SSH
+Verifique support SSH.
+Configure el IP domain.
+Genere un par de claves RSA.
+Configure autenticación de usuarios.
+Configure las lineas vty.
+EHabilite SSH versión 2.
+
+1.4Configuración básica de un router
+
+1.4.1
+Configuración de parámetros básicos del router
+Si desea que los dispositivos puedan enviar y recibir datos fuera de su red, deberá configurar routeres.
+
+1.4.3
+Topología de doble pila
+Una característica que distingue a los switches de los routers es el tipo de interfaces que admite cada uno.
+
+1.4.4
+Configurar interfaces de routers
+Los routers admiten redes LAN y WAN, y pueden interconectar distintos tipos de redes; por lo tanto, admiten muchos tipos de interfaces
+
+1.4.6
+Interfaces de bucle invertido IPv4
+La interfaz de bucle invertido es una interfaz lógica interna del router. No está asignado a un puerto físico y nunca se puede conectar a ningún otro dispositivo. 
+Se la considera una interfaz de software que se coloca automáticamente en estado "up" (activo), siempre que el router esté en funcionamiento.
+
+1.5 Verificar redes conectadas directamente
+1.5.1
+Comandos de verificación de interfaz
+No tiene sentido configurar el router a menos que verifique la configuración y la conectividad.
+
+1.5.2
+Verificación del estado de una interfa
+La salida de los comandos show ip interface brief y show ipv6 interface brief y se puede usar para revelar rápidamente el estado de todas las interfaces en el router
+
+1.5.4
+Verificar la configuración de la interfaz
+Junto con la dirección local del enlace y la dirección de unidifusión global, show running-config interface la salida incluye las direcciones de multidifusión asignadas a la interfaz
+
+1.5.5
+Verificar rutas
+La salida de los show ip route comandos show ipv6 route y muestra las tres entradas de red conectadas directamente y las tres entradas de interfaz de ruta de host local
+
+1.5.6
+Filtrado de los resultados del comando show
+Los comandos que generan varias pantallas de resultados se pausan al cabo de 24 líneas de manera predeterminada
+section
+include
+exclude
+begin
+
+1.5.8
+Historial de comandos
+La función de historial de comandos es útil porque almacena temporalmente la lista de comandos ejecutados para recuperar.
+
+Para recuperar comandos en el búfer de historial, presione Ctrl+P o la Up Arrow tecla. 
+
+modulo 2 conceptos de switching 
+
+2.1 Reenvío de tramas
+
+2.1.1
+Switching en la red
+El concepto de switching y reenvío de tramas es universal en la tecnología de redes y en las telecomunicaciones. En las redes LAN, WAN y en la red pública de telefonía conmutada (PSTN), se usan diversos tipos de switches.
+
+2.1.2
+Tabla de direcciones MAC del switch
+Los switches usan direcciones MAC de destino para dirigir las comunicaciones de red a través del switch, fuera del puerto apropiado, hacia el destino.
+
+2.1.3
+El método Aprender y Reenviar del Switch
+Paso 1. Aprender - Examinando la dirección Origen MAC
+Paso 2. Reenviar - Examinadno la dirección destino MAC
+
+2.1.5
+Métodos de reenvío del switch
+Los switches toman decisiones de reenvío de capa 2 muy rápidamente. Esto se debe al software en los circuitos integrados para aplicaciones específicas (ASIC, por sus siglas en ingles). 
+
+Los switches de capa 2 utilizan uno de estos dos métodos para cambiar tramas:Almacenamiento y reenvío de switching Método de corte
+
+2.1.6
+Intercambio de almacenamiento y reenvío
+El intercambio de almacenamiento y reenvío, a diferencia del intercambio de corte, tiene laS siguientes características principales:
+Verificación de errores
+Almacenamiento en búfer automático 
+
+2.1.7
+Switching por método de corte
+El método de switching de almacenamiento y reenvío elimina las tramas que no pasan la comprobación FCS. Por lo tanto, no reenvía tramas no válidas.
+
+
+2.2 Dominios de switching
+2.2.1
+Dominios de colisiones
+ En este tema se explica cómo funcionan los switches entre sí y con otros dispositivos para eliminar colisiones y reducir la congestión de la red
+
+2.2.2
+Dominios de difusión
+Una serie de switches interconectados forma un dominio de difusión simple. Solo los dispositivos de capa de red, como los routers, pueden dividir un dominio de difusión de capa 2
+
+2.2.3
+Alivio de la congestión en la red
+Los switches LAN tienen características especiales que los hacen eficaces para aliviar la congestión de una red. 
+
+Las características de los switches que alivian la congestión de la red incluyen las siguientes:
+Velocidades de puertos rápidas
+Cambio interno rápido 
+Búferes de trama grande
+
+modulo 3 VLANs 
+
+3.1 Descripción general de las VLAN
+
+3.1.1
+Definiciones de VLAN
+Dentro de una red conmutada, las VLAN proporcionan la segmentación y la flexibilidad organizativa. Un grupo de dispositivos dentro de una VLAN se comunica como si cada dispositivo estuviera conectados al mismo cable. Las VLAN se basan en conexiones lógicas, en lugar de conexiones físicas.
+
+3.1.2
+Ventajas de un diseño de VLAN
+Dominios de difusión más pequeños
+Seguridad mejorada
+Reducción de costos
+Mejor rendimiento	
+
+3.1.3
+Tipos de VLAN
+VLAN predeterminada
+VLAN de datos
+VLAN nativa
+VLAN de administración
+VLAN de voz
+
+3.2 Redes VLAN en un entorno conmutado múltiple
+3.2.1
+Definición de troncos de VLAN
+Las VLAN no serían muy útiles sin los enlaces troncales de VLAN. Los troncos de VLAN permiten que todo el tráfico de VLAN se propague entre conmutadores. 
+
+3.2.2
+Redes sin VLAN
+En condiciones normales de funcionamiento, cuando un switch recibe una trama de difusión en uno de sus puertos, reenvía la trama por todos los demás puertos, excepto el puerto por donde recibió la difusión. 
+
+3.2.3
+Red con VLAN
+Cuando se implementan las VLAN en un switch, la transmisión del tráfico de unidifusión, multidifusión y difusión desde un host en una VLAN en particular se limita a los dispositivos presentes en esa VLAN.
+
+3.2.4
+Identificación de VLAN con etiqueta
+Cuando el switch recibe una trama en un puerto configurado en modo de acceso y asignado a una VLAN, el switch coloca una etiqueta VLAN en el encabezado de la trama, vuelve a calcular la Secuencia de Verificación de Tramas (FCS) y envía la trama etiquetada por un puerto de enlace troncal.
+
+3.2.5
+VLAN nativas y etiquetado de 802.1Q
+l estándar IEEE 802.1Q especifica una VLAN nativa para los enlaces troncal, que por defecto es VLAN 1. Cuando un marco sin etiqueta llega a un puerto troncal, se asigna a la VLAN nativa.
+
+3.2.6
+Etiquetado de VLAN de voz
+Se necesita una red VLAN de voz separada para admitir VoIP. Esto permite aplicar políticas de calidad de servicio (QoS) y seguridad al tráfico de voz.
+
+3.3 Configuración de VLAN
+3.3.1
+Rangos de VLAN en los switches Catalyst
+Los distintos switches Cisco Catalyst admiten diversas cantidades de VLAN. La cantidad de VLAN que admiten es suficiente para satisfacer las necesidades de la mayoría de las organizaciones.
+
+3.3.2
+Comandos de creación de VLAN
+Switch# configure terminal
+Switch(config)# vlan vlan-id
+Switch(config-vlan)# name vlan-name
+Switch(config-vlan)# end
+
+3.3.6
+VLAN de voz, datos
+Un puerto de acceso puede pertenecer a sólo una VLAN a la vez. Sin embargo, un puerto también se puede asociar a una VLAN de voz.
+
+3.3.8
+Verificar la información de la VLAN
+Una vez que se configura una VLAN, se puede validar la configuración con los comandos show de IOS de Cisco
+
+
+3.3.10
+Eliminar las VLANEl comando de modo de configuración global no vlan vlan-id se usa para remover una VLAN desde el archivo del switch vlan.dat.
+
+3.4 Enlaces troncales de la VLAN
+
+3.4.1
+Comandos de configuración troncal
+Switch# configure terminal
+Switch(config)# interface interface-id
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# switchport trunk native vlan vlan-id
+Switch(config-if)# switchport trunk allowed vlan vlan-list
+Switch(config-if)# end
+
+3.4.4
+Restablecimiento del enlace troncal al estado predeterminadoUse el no switchport trunk allowed vlan y el no switchport trunk native vlan comando para eliminar las VLAN permitidas y restablecer la VLAN nativa del enlace troncal. 
+
+3.5 Protocolo de enlace troncal dinámico
+3.5.1
+Introducción a DTP
+DTP es un protocolo exclusivo de Cisco que se habilita de manera automática en los switches de las series Catalyst 2960 y Catalyst 3560.
+
+3.5.2
+Modos de interfaz negociados
+access
+dynamic auto
+dynamic desirable
+trunk
+
+modulo 4 inter-VLAN routing 
+
+4.1 Funcionamiento de Inter-VLAN Routing
+4.1.1
+¿Qué es Inter-VLAN RoutingInter-VLA routing es el proceso de reenviar el tráfico de red de una VLAN a otra VLAN.
+
+4.1.2
+Inter-VLAN Routing heredado
+Inter-VLAN routing heredado, usa las interfaces fisicas funciona, pero tiene limitaciones significantes. No es razonablemente escalable porque los routers tienen un número limitado de interfaces físicas. 
+
+4.1.3
+Router-on-a-Stick Inter-VLAN Routing
+El método ‘router-on-a-stick’ inter-VLAN routing supera la limitación del método de enrutamiento interVLAN heredado. Solo requiere una interfaz Ethernet física para enrutar el tráfico entre varias VLAN de una red.
+
+4.1.4
+Inter-VLAN Routing en un switch de capa 3
+El método moderno para realizar inter-VLAN routing es utilizar switches de capa 3 e interfaces virtuales del switch (SVI). Una SVI es una interfaz virtual configurada en un switch multicapa, como se muestra en la figura.
+
+4.2 Routing entre VLAN con router-on-a-stick
+4.2.1
+Escenario Router-on-a-Stick
+Este tema detalla como configurar router-on-a-stick inter-VLAN routing. Puede ver en la figura que el router no está en el centro de la topología, sino que parece estar en un palo cerca del borde, de ahí el nombre.
+
+4.2.4
+Configuración de subinterfaces de R1
+Para el método de router-on-a-stick, se requieren subinterfaces configuradas para cada VLAN que se pueda enrutar.
+
+Se crea una subinterfaz mediante el comando interface interface_id subinterface_id global configuration mode. La sintaxis de la subinterfaz es la interfaz física seguida de un punto y un número de subinterfaz. Aunque no es obligatorio, es costumbre hacer coincidir el número de subinterfaz con el número de VLAN.
+
+4.2.5
+Verificar la conectividad entre PC1 y PC2
+La configuración del router-on-a-stick se completa después de configurar los enlaces troncales del switch y las subinterfaces del router. La configuración se puede verificar desde los hosts, el router y el switch.
+
+4.3 Inter-VLAN Routing usando switches de capa 3
+4.3.1
+Inter-VLAN Routing en Switch de capa 3
+Las redes empresariales modernas rara vez usan router-on-a-stick porque no se escalan fácilmente para cumplir los requisitos. En estas redes muy grandes, los administradores de red utilizan switches de capa 3 para configurar el inter-VLAN routing.
+
+4.3.3
+Configuracion de switch de capa 3
+Paso 1. Crear las VLAN.
+
+Paso 2. Crear las interfaces VLAN SVI.
+
+Paso 3. Configurar puertos de acceso.
+
+Paso 4. Habilitar IP routing.
+
+4.3.4
+Verificación Inter-VLAN Routing del switch de capa 3
+El Inter-VLAN Routing mediante un switch de capa 3 es más sencillo de configurar que el método router-on-a-stick. Una vez completada la configuración, la configuración se puede verificar probando la conectividad entre los hosts.
+
+4.3.5
+Enrutamiento en un switch de capa 3
+Si se quiere que otros dispositivos de Capa 3 puedan acceder a las VLAN, deben anunciarse mediante enrutamiento estático o dinámico. Para habilitar el enrutamiento en un switch de capa 3, se debe configurar un puerto enrutado.
+
+4.3.7
+Configuración de enrutamiento en un switch de capa 3
+Paso 1. Configure el puerto enrutado.
+
+Paso 2. Activar el routing.
+
+Paso 3. Configurar el enrutamiento
+
+Paso 4. Verificar enrutamiento.
+
+Paso 5. Verificar la conectividad
+
+4.4 Resolución de problemas de Inter-VLAN routing
+
+4.4.1
+Problemas comunes de Inter-VLAN routing
+VLAN faltantes	
+Problemas con el puerto troncal del switch	
+Problemas en los puertos de acceso de switch	
+
+4.4.3
+VLAN faltantes
+Un problema de conectividad entre VLAN podría deberse a la falta de una VLAN. La VLAN podría faltar si no se creó, se eliminó accidentalmente o no se permite en el enlace troncal.
+
+4.4.4
+Problemas con el puerto troncal del switch
+Otro problema para el enrutamiento entre VLAN incluye puertos de switch mal configurados. En una solución interVLAN heredada, esto podría deberse a que el puerto del router de conexión no está asignado a la VLAN correcta.
+
+4.4.5
+Problemas en los puertos de acceso de switch
+Cuando sospeche que hay un problema con una configuración del switch, utilice los distintos comandos de verificación para examinar la configuración e identificar el problema.
+
+4.4.6
+Temas de configuración del router
+Los problemas de configuración del router-on-a-stick suelen estar relacionados con configuraciones incorrectas de la subinterfaz. Por ejemplo, se configuró una dirección IP incorrecta o se asignó un ID de VLAN incorrecto a la subinterfaz.
+
+
+
+
+

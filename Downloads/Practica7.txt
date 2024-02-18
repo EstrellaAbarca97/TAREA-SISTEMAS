@@ -1,0 +1,109 @@
+practica07-STP Bancomer
+07:24 p.m 13 de febrero 2024
+Estrella de Jesus Abarca Rojas
+A210074
+
+
+Stp- protocolo de arbol de expansión- evita bucles
+
+existen 3 formas en las que se determina el puente raiz "brudge root"
+
+
+caso 1 designación del bridge root mediante mac-address mas pequeña
+
+switch        mac-address   prioridad    root
+cobranza    0001.9658.EC33  32769
+merca       0030.F2E9.E101  32769
+soporte     0000.0C38.8D3A  32769      This bridge is the root
+
+roles
+designed
+root
+alter
+
+caso 2 designacion como bridge root  a "cobranza" de forma directa 
+switch        mac-address   prioridad    root
+cobranza    0001.9658.EC33   24577    This bridge is the root
+merca       0030.F2E9.E101  32769
+soporte     0000.0C38.8D3A  32769  
+
+    
+cobranza(config)#spanning-tree vlan 1 root primary
+
+¿de donde sale la prioridad de  24577?   32769 - 4096 = 28 673 - 4096= 24577
+28 673 seria la prioridad que se le asignaria al bridge secundario en caso de existir
+
+
+
+
+caso 3 designacion del bridge root a "merca" por prioridad
+switch        mac-address   prioridad    root
+cobranza    0001.9658.EC33   24577    
+merca       0030.F2E9.E101   20481    This bridge is the root
+soporte     0000.0C38.8D3A   32769  
+
+
+la prioridad de merca es 32769 le tenemos que asignar una prioridad de 24577  - 4096 = 20481 
+
+nota: al intentar asignarle la prioridad  20481 no se permitira
+
+merca(config)#spanning-tree vlan 1 priority 20481
+% Bridge Priority must be in increments of 4096.
+% Allowed values are:
+  0     4096  8192  12288 16384 20480 24576 28672
+  32768 36864 40960 45056 49152 53248 57344 61440
+merca(config)#
+
+esto si lo permitio 
+conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+merca(config)#spanning-tree vlan 1 priority 20480
+merca(config)#end
+merca#
+%SYS-5-CONFIG_I: Configured from console by console
+wr
+Building configuration...
+[OK]
+merca#sh spanning-tree
+
+la forma en la que STP designa al bridge root- puente raiz son:
+
+1. Utilizandi la MAC-ADDRESS mas pequeña de los switches 
+2. por asignació directa spanning-tree vlan 1 root primary
+3. Por prioridad spanning-tree vlan priority 20481
+
+
+
+
+merca#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+merca(config)#inter range fa0/3,fa0/4
+merca(config-if-range)#spanning-tree portfast
+
+pone a las interfaces en modo rapido para no entrar al algoritmo de stp
+
+merca#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+merca(config)#inter range fa0/5
+merca(config-if-range)#spanning-tree sportfast
+                                     ^
+% Invalid input detected at '^' marker.
+	
+merca(config-if-range)#
+merca(config-if-range)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+
+%Portfast has been configured on FastEthernet0/5 but will only
+have effect when the interface is in a non-trunking mode.
+merca(config-if-range)#
+
+
+
+
+
+
+
+
